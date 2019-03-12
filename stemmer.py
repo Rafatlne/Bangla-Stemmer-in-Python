@@ -70,7 +70,7 @@ def stemOfWord(word):
                 if replacePrefix in replaceRule:
                     replaceSuffix = replaceRule.get(replacePrefix)
                     replaceSuffix = "".join(replaceSuffix)
-                    builder = word
+                    builder = list(word)
                     print(builder)
                     l = 0
                     kValue = 0
@@ -79,10 +79,10 @@ def stemOfWord(word):
                             ## There will some code like this below logic
                             ## builder.setCharAt(k, replaceSuffix.charAt(l));
                             ## haven't implemented yet
-                            builder += builder[0:k]
+                            builder[k] = replacePrefix[l]
                         l = l + 1
                         kValue = k+1
-                    word = builder[0:kValue]
+                    word = "".join(builder[0:kValue])
                 elif check(word[0:indx]):
                     word = word[0:indx]
                 break
