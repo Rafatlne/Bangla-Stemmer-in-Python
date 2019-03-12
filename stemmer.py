@@ -76,9 +76,6 @@ def stemOfWord(word):
                     kValue = 0
                     for k in range(indx, len(replaceSuffix) + indx):
                         if replaceSuffix[l] != '.':
-                            ## There will some code like this below logic
-                            ## builder.setCharAt(k, replaceSuffix.charAt(l));
-                            ## haven't implemented yet
                             builder[k] = replacePrefix[l]
                         l = l + 1
                         kValue = k+1
