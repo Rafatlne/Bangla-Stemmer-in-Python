@@ -30,17 +30,15 @@ def RuleFileParser(file):
         lines.append(singleLine)
         singleLine = file.readline()
 
-    file.close()
 
-    j = 0
+
     for i in range(0, len(lines)):
         if lines[i] == '{':
-
+            i += 1
             while lines[i] != '}':
+                if (lines[i] != ''):
+                    tempList.append(lines[i])
                 i += 1
-                tempList.append(lines[i])
-
-            tempList.remove('}')
             passed.append(tempList[:])
             del tempList[:]
 
@@ -67,21 +65,26 @@ def stemOfWord(word):
         for j in range(0, len(passed[i])):
             replacePrefix = passed[i][j]
             matcher = ".*" + replacePrefix + "$"
-            if matcher in word:
+            if re.search(matcher, word):
                 indx = len(word) - len(replacePrefix)
                 if replacePrefix in replaceRule:
                     replaceSuffix = replaceRule.get(replacePrefix)
+                    replaceSuffix = "".join(replaceSuffix)
                     builder = word
+                    print(builder)
                     l = 0
-                    k = indx
+                    kValue = 0
                     for k in range(indx, len(replaceSuffix) + indx):
                         if replaceSuffix[l] != '.':
-                            builder[k] = replaceSuffix[l]
-                        k, l = k + 1, l + 1
-
-                    word = builder[0:k]
+                            ## There will some code like this below logic
+                            ## builder.setCharAt(k, replaceSuffix.charAt(l));
+                            ## haven't implemented yet
+                            builder += builder[0:k]
+                        l = l + 1
+                        kValue = k+1
+                    word = builder[0:kValue]
                 elif check(word[0:indx]):
-                    word = word[0, indx]
+                    word = word[0:indx]
                 break
     return word
 
@@ -96,7 +99,6 @@ def dependantCharSetInstallation():
     st.add('ো')
 
 
-
 def check(word):
     wordLength = 0
     for i in range(0, len(word)):
@@ -106,19 +108,22 @@ def check(word):
     return wordLength >= 1
 
 
-def stemmingSentence():
-    firstText = open("inputfile", "r")
-    singleLine = firstText.readline()
-    print(singleLine)
+def stemmingSentence(text):
+    singleLine = text.readline()
 
-    for word in re.split("[\\s।%,ঃ]+", singleLine):
-        print(stemOfWord(word))
+    while singleLine:
+        print(singleLine)
+        for word in re.split("[\\s।%,ঃ]+", singleLine):
+            print(stemOfWord(word),end=" ")
+        singleLine = text.readline()
 
-    firstText.close()
 
 
-file = open("common.rules", "r")
+commonRules = open("common.rules", "r")
+inputfile = open("inputfile", "r")
 
-# print(RuleFileParser(file))
-RuleFileParser(file)
-stemmingSentence()
+
+RuleFileParser(commonRules)
+stemmingSentence(inputfile)
+commonRules.close()
+inputfile.close()
