@@ -30,4 +30,4 @@ Y.Z     ->      A.B     # When Y, followed by some character a, followed by Z
 Here, X, Y, Z etc can consist of one or more characters. Rules within the same block are arranged in decreasing order of priority. So if a word matches more than one rule within the same block, first matching rule will be applied.
 
 ##### TODO
-1. Fix the replaceSuffix parameter
+~~1. Fix the replaceSuffix parameter~~
